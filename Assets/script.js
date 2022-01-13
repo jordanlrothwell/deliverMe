@@ -32,3 +32,18 @@ let getExampleHH = function (URL) {
 };
 
 getExampleHH(handWashingURL);
+
+let handWashingURL =
+  "https://myhospitalsapi.aihw.gov.au/api/v1/flat-data-extract/MYH-HH?skip=0&top=100&reporting_unit_code=H0235";
+
+let getExampleHH = function (URL) {
+  fetch(URL)
+    .then(function (response) {
+      return response.json();
+    })
+    .then(function (data) {
+      console.log(data.result);
+    });
+};
+
+getExampleHH(handWashingURL);
