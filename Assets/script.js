@@ -18,17 +18,22 @@ getMeasureCategories(measureCategoriesURL);
 // this is an example of what the data actually looks like when we retrieve it
 // main parameters: measure category = MYH-HH ('Hand hygiene %'), reporting unit code = H0235 ('Colac Area Health')
 // other (required) parameters: skip = 0 (how many entries to skip), top = 100 (how many entries to return)
-let handWashingURL =
-  "https://myhospitalsapi.aihw.gov.au/api/v1/flat-data-extract/MYH-HH?skip=0&top=100&reporting_unit_code=H0235";
 
-let getExampleHH = function (URL) {
-  fetch(URL)
+let reportingUnitsURL =
+  "https://myhospitalsapi.aihw.gov.au/api/v1/reporting-units";
+
+let getReportingUnits = function () {
+  fetch(reportingUnitsURL)
     .then(function (response) {
       return response.json();
     })
     .then(function (data) {
-      console.log(data.result);
+      let resultsArray = data.result;
+      let hospitalsOnly = resultsArray.filter((obj) => {
+        return obj.reporting_unit_type.reporting_unit_type_code === "H";
+      });
+      console.log(hospitalsOnly);
     });
 };
 
-getExampleHH(handWashingURL);
+getReportingUnits();
