@@ -1,3 +1,5 @@
+let allHospitalsCoordinateData = [];
+
 let reportingUnitsURL =
   "https://myhospitalsapi.aihw.gov.au/api/v1/reporting-units";
 
@@ -12,8 +14,18 @@ let getHospitalsArray = function () {
         return obj.reporting_unit_type.reporting_unit_type_code === "H";
       });
       console.log(hospitalsOnly);
+      for (i = 0; i < hospitalsOnly.length; i++) {
+        let hospitalCoordinateData = {};
+        hospitalCoordinateData.latitude = (hospitalsOnly[i].latitude)
+        hospitalCoordinateData.longitude = (hospitalsOnly[i].longitude)
+        hospitalCoordinateData.hospital_code = (hospitalsOnly[i].reporting_unit_code)
+        allHospitalsCoordinateData.push(hospitalCoordinateData);
+      }
+      console.log(allHospitalsCoordinateData);
     });
 };
+
+getHospitalsArray();
 
 let getData = function (hospitalCode) {
   let URL = `https://myhospitalsapi.aihw.gov.au/api/v1/reporting-units/${hospitalCode}/data-items`;
@@ -50,28 +62,3 @@ let getData = function (hospitalCode) {
       console.log(IVFUnit);
     });
 };
-
-getData("H0021");
-
-// {
-//   "reported_measure_category_code": "SSI_ObstetricMaternityServices",
-//   "reported_measure_category_name": "Obstetric services",
-//   "reported_measure_category_type": {
-//     "reported_measure_category_type_code": "SSI",
-//     "reported_measure_category_type_name": "Specialised service unit"
-//   }
-
-//   {
-//     "reported_measure_category_code": "SSI_NeonatalICULevelIII",
-//     "reported_measure_category_name": "Neonatal intensive care unit",
-//     "reported_measure_category_type": {
-//       "reported_measure_category_type_code": "SSI",
-//       "reported_measure_category_type_name": "Specialised service unit"
-//     }
-//     {
-//       "reported_measure_category_code": "SSI_InVitroFertilisationUnit",
-//       "reported_measure_category_name": "In-vitro fertilisation unit",
-//       "reported_measure_category_type": {
-//         "reported_measure_category_type_code": "SSI",
-//         "reported_measure_category_type_name": "Specialised service unit"
-//       }
