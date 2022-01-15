@@ -15,17 +15,63 @@ let getHospitalsArray = function () {
     });
 };
 
-let getLatestHHPercentage = function (arr) {
-    console.log(arr.slice(-1)[0].value)
-  }
-
-let getHandWashingData = function (hospitalCode) {
-  let URL = `https://myhospitalsapi.aihw.gov.au/api/v1/flat-data-extract/MYH-HH?skip=0&top=100&measure_code=MYH0019&reporting_unit_code=${hospitalCode}`;
+let getData = function (hospitalCode) {
+  let URL = `https://myhospitalsapi.aihw.gov.au/api/v1/reporting-units/${hospitalCode}/data-items`;
   fetch(URL)
     .then(function (response) {
       return response.json();
     })
     .then(function (data) {
-      getLatestHHPercentage(data.result.data);
+      let resultsArray = data.result;
+      console.log(resultsArray);
+      let handHygieneData = resultsArray.filter((obj) => {
+        return obj.measure_code === "MYH0019";
+      });
+      let staphInfectionData = resultsArray.filter((obj) => {
+        return obj.measure_code === "MYH0023";
+      });
+      let specialisedServicesData = resultsArray.filter((obj) => {
+        return obj.measure_code === "MYH0039";
+      });
+      let obstetricsUnit = specialisedServicesData.filter((obj) => {
+        return obj.reported_measure_code === "MYH-RM0760";
+      });
+      let neoNatalUnit = specialisedServicesData.filter((obj) => {
+        return obj.reported_measure_code === "MYH-RM0777";
+      });
+      let IVFUnit = specialisedServicesData.filter((obj) => {
+        return obj.reported_measure_code === "MYH-RM0778";
+      });
+      console.log(handHygieneData);
+      console.log(staphInfectionData);
+      console.log(specialisedServicesData);
+      console.log(obstetricsUnit);
+      console.log(neoNatalUnit);
+      console.log(IVFUnit);
     });
 };
+
+getData("H0021");
+
+// {
+//   "reported_measure_category_code": "SSI_ObstetricMaternityServices",
+//   "reported_measure_category_name": "Obstetric services",
+//   "reported_measure_category_type": {
+//     "reported_measure_category_type_code": "SSI",
+//     "reported_measure_category_type_name": "Specialised service unit"
+//   }
+
+//   {
+//     "reported_measure_category_code": "SSI_NeonatalICULevelIII",
+//     "reported_measure_category_name": "Neonatal intensive care unit",
+//     "reported_measure_category_type": {
+//       "reported_measure_category_type_code": "SSI",
+//       "reported_measure_category_type_name": "Specialised service unit"
+//     }
+//     {
+//       "reported_measure_category_code": "SSI_InVitroFertilisationUnit",
+//       "reported_measure_category_name": "In-vitro fertilisation unit",
+//       "reported_measure_category_type": {
+//         "reported_measure_category_type_code": "SSI",
+//         "reported_measure_category_type_name": "Specialised service unit"
+//       }
