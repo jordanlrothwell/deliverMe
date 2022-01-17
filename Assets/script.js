@@ -34,70 +34,70 @@
 // getExampleHH(handWashingURL);
 
 
-let allHospitalsCoordinateData = [];
+// let allHospitalsCoordinateData = [];
 
-let reportingUnitsURL =
-  "https://myhospitalsapi.aihw.gov.au/api/v1/reporting-units";
+// let reportingUnitsURL =
+//   "https://myhospitalsapi.aihw.gov.au/api/v1/reporting-units";
 
-let getHospitalsArray = function () {
-  fetch(reportingUnitsURL)
-    .then(function (response) {
-      return response.json();
-    })
-    .then(function (data) {
-      let resultsArray = data.result;
-      let hospitalsOnly = resultsArray.filter((obj) => {
-        return obj.reporting_unit_type.reporting_unit_type_code === "H";
-      });
-      console.log(hospitalsOnly);
-      for (i = 0; i < hospitalsOnly.length; i++) {
-        let hospitalCoordinateData = {};
-        hospitalCoordinateData.latitude = (hospitalsOnly[i].latitude)
-        hospitalCoordinateData.longitude = (hospitalsOnly[i].longitude)
-        hospitalCoordinateData.hospital_code = (hospitalsOnly[i].reporting_unit_code)
-        allHospitalsCoordinateData.push(hospitalCoordinateData);
-      }
-      console.log(allHospitalsCoordinateData);
-    });
-};
+// let getHospitalsArray = function () {
+//   fetch(reportingUnitsURL)
+//     .then(function (response) {
+//       return response.json();
+//     })
+//     .then(function (data) {
+//       let resultsArray = data.result;
+//       let hospitalsOnly = resultsArray.filter((obj) => {
+//         return obj.reporting_unit_type.reporting_unit_type_code === "H";
+//       });
+//       console.log(hospitalsOnly);
+//       for (i = 0; i < hospitalsOnly.length; i++) {
+//         let hospitalCoordinateData = {};
+//         hospitalCoordinateData.latitude = (hospitalsOnly[i].latitude)
+//         hospitalCoordinateData.longitude = (hospitalsOnly[i].longitude)
+//         hospitalCoordinateData.hospital_code = (hospitalsOnly[i].reporting_unit_code)
+//         allHospitalsCoordinateData.push(hospitalCoordinateData);
+//       }
+//       console.log(allHospitalsCoordinateData);
+//     });
+// };
 
-getHospitalsArray();
+// getHospitalsArray();
 
-let getData = function (hospitalCode) {
-  let URL = `https://myhospitalsapi.aihw.gov.au/api/v1/reporting-units/${hospitalCode}/data-items`;
-  fetch(URL)
-    .then(function (response) {
-      return response.json();
-    })
-    .then(function (data) {
-      let resultsArray = data.result;
-      console.log(resultsArray);
-      let handHygieneData = resultsArray.filter((obj) => {
-        return obj.measure_code === "MYH0019";
-      });
-      let staphInfectionData = resultsArray.filter((obj) => {
-        return obj.measure_code === "MYH0023";
-      });
-      let specialisedServicesData = resultsArray.filter((obj) => {
-        return obj.measure_code === "MYH0039";
-      });
-      let obstetricsUnit = specialisedServicesData.filter((obj) => {
-        return obj.reported_measure_code === "MYH-RM0760";
-      });
-      let neoNatalUnit = specialisedServicesData.filter((obj) => {
-        return obj.reported_measure_code === "MYH-RM0777";
-      });
-      let IVFUnit = specialisedServicesData.filter((obj) => {
-        return obj.reported_measure_code === "MYH-RM0778";
-      });
-      console.log(handHygieneData);
-      console.log(staphInfectionData);
-      console.log(specialisedServicesData);
-      console.log(obstetricsUnit);
-      console.log(neoNatalUnit);
-      console.log(IVFUnit);
-    });
-};
+// let getData = function (hospitalCode) {
+//   let URL = `https://myhospitalsapi.aihw.gov.au/api/v1/reporting-units/${hospitalCode}/data-items`;
+//   fetch(URL)
+//     .then(function (response) {
+//       return response.json();
+//     })
+//     .then(function (data) {
+//       let resultsArray = data.result;
+//       console.log(resultsArray);
+//       let handHygieneData = resultsArray.filter((obj) => {
+//         return obj.measure_code === "MYH0019";
+//       });
+//       let staphInfectionData = resultsArray.filter((obj) => {
+//         return obj.measure_code === "MYH0023";
+//       });
+//       let specialisedServicesData = resultsArray.filter((obj) => {
+//         return obj.measure_code === "MYH0039";
+//       });
+//       let obstetricsUnit = specialisedServicesData.filter((obj) => {
+//         return obj.reported_measure_code === "MYH-RM0760";
+//       });
+//       let neoNatalUnit = specialisedServicesData.filter((obj) => {
+//         return obj.reported_measure_code === "MYH-RM0777";
+//       });
+//       let IVFUnit = specialisedServicesData.filter((obj) => {
+//         return obj.reported_measure_code === "MYH-RM0778";
+//       });
+//       console.log(handHygieneData);
+//       console.log(staphInfectionData);
+//       console.log(specialisedServicesData);
+//       console.log(obstetricsUnit);
+//       console.log(neoNatalUnit);
+//       console.log(IVFUnit);
+//     });
+// };
 
 
 
@@ -131,11 +131,43 @@ let r = 6371;
 return(c * r);
 }
 
-// Driver code   
 
-let lat1 = 53.32055555555556;
-let lat2 = 53.31861111111111;
-let lon1 = -1.7297222222222221;
-let lon2 = -1.6997222222222223;
-document.write(distance(lat1, lat2,
-        lon1, lon2) + " K.M");
+
+
+let measureCategoriesURL =
+  "https://myhospitalsapi.aihw.gov.au/api/v1/measure-categories";
+
+
+var test_variable;
+var test_location = "75 elizabeth street liverpool nsw";
+var search_location = function(query) {
+  let URL = "https://api.tomtom.com/search/2/geocode/" + query + ".json?storeResult=false&countrySet=AU&view=Unified&key=Nb6yeAUhcbqCYWfTg0Q980Ek8XViGDYz"
+  console.log(query);
+  fetch(URL)
+  .then(response => response.json())
+  .then(data => {
+    test_variable = data;
+    console.log(data);
+    console.log("the closest address is " + data.results[0].address.streetName + " " + data.results[0].address.municipalitySubdivision + " " + data.results[0].id)
+    var lat = test_variable.results[0].position.lat;
+    var lon = test_variable.results[0].position.lon;
+    console.log("lat: " + lat + ", lon: " + lon);
+    return([lat,lon]);
+  })
+  .then(coords => {
+    var lat = coords[0];
+    var lon = coords[1];
+    fetch("https://myhospitalsapi.aihw.gov.au/api/v1/reporting-units")
+    .then(response => response.json())
+    .then(data => {
+      console.log(data);
+      test_variable = data;
+
+      for (let i = 0; i < data.result.length; i++) {
+        console.log("distance to " + test_variable.result[i].reporting_unit_name + " is " + distance(lat, test_variable.result[i].latitude, lon, test_variable.result[i].longitude).toFixed(2) + "km");
+      }
+    })
+  })
+}
+
+search_location(test_location);
