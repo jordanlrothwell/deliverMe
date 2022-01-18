@@ -4,11 +4,20 @@ searchbar.focus();
 var dropdown_items = document.querySelectorAll(".dropdown-item");
 dropdown_items[0].addEventListener("click", search);
 
+searchbar.addEventListener("keypress", function(event) {
+  if (event.key === 'Enter') {
+    dropdown_items[0].click();
+  }
+});
+
+
+
 function search(){
   const user_input = searchbar.value;
   searchbar.value = "searching the universe...";
   console.log(user_input);
   searchbar.focus();
+  searchbar.select();
   search_location(user_input);
 }
 
@@ -98,6 +107,22 @@ function getData(hospitalCode, hospitalName) {
       }
 
       console.log([hospitalName, returnHygieneData, returnStaphInfectionData, returnSpecialisedServicesData, returnObstetricsUnit, returnNeoNatalUnit, returnIVFUnit]);
+    
+      document.querySelector("#search-results").innerHTML +=
+      '<div class="card col-12 col-sm-6 col-md-4 bg-light">' +
+          '<div class="card-body">' +
+              '<h5 class="card-title">' + hospitalName + '</h5>' +
+              '<p class="card-text"><strong>handHygieneData:</strong> ' + returnHygieneData + '</p>' +
+              '<p class="card-text"><strong>staphInfectionData:</strong> ' + returnStaphInfectionData + '</p>' +
+              '<p class="card-text"><strong>specialisedServicesData:</strong> ' + returnSpecialisedServicesData + '</p>' +
+              '<p class="card-text"><strong>obstetricsUnit:</strong> ' + returnObstetricsUnit + '</p>' +
+              '<p class="card-text"><strong>neoNatalUnit:</strong> ' + returnNeoNatalUnit + '</p>' +
+              '<p class="card-text"><strong>IVFUnit:</strong> ' + returnIVFUnit + '</p>' +
+          '</div>' + 
+      '</div>';
+    
+    searchbar.value = "";
+    
     });
 }
 
@@ -173,7 +198,7 @@ function search_location(query) {
           sortedDistances_x = sortedDistances;
           closestHospitalCodes = [];
           closestHospitalNames = [];
-          for (let i = 0; i < 10; i++) {
+          for (let i = 0; i < 9; i++) {
             for (let j = 0; j < data.result.length; j++) {
               if (sortedDistances[i] == distances[j]) {
                 closestHospitalCodes.push(data.result[j].reporting_unit_code);
@@ -184,9 +209,11 @@ function search_location(query) {
           return ([closestHospitalCodes, closestHospitalNames]);
         })
         .then(codes => {
+          document.querySelector("#search-results").innerHTML = "";
           for (let i = 0; i < codes[0].length; i++) {
             getData(codes[0][i], codes[1][i]);
           }
+          
         });
     });
 }
@@ -194,14 +221,3 @@ function search_location(query) {
 
 
 
-// cardHTML[i] =   '<div class="card col-12 col-sm-6 col-md-4 col-lg-4 col-xl-2 text-white bg-primary">' +
-//                                         '<div class="card-body">' +
-//                                             '<h5 class="card-title">' + returnArray[i][8] + '</h5>' +
-//                                             '<img src="' + returnArray[i][3] + '">' +
-//                                             '<p class="card-text"><strong>' + returnArray[i][1] + ':</strong> ' + returnArray[i][2] + '</p>' +
-//                                             '<p class="card-text"><strong>Temperature:</strong> ' + returnArray[i][4] + '&degC</p>' +
-//                                             '<p class="card-text"><strong>Humidity:</strong> ' + returnArray[i][5] + '%</p>' +
-//                                             '<p class="card-text"><strong>Wind speed:</strong> ' + returnArray[i][6] + 'm/s</p>' +
-//                                             '<p class="card-text"><strong>UV index:</strong> ' + rate_UV(returnArray[i][7]) + '</p>' +
-//                                         '</div>' + 
-//                                     '</div>';
