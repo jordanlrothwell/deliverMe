@@ -1,3 +1,4 @@
+
 let getData = function (hospitalCode) {
   let URL = "https://myhospitalsapi.aihw.gov.au/api/v1/reporting-units/" + hospitalCode + "/data-items";
   fetch(URL)
@@ -67,7 +68,7 @@ let getData = function (hospitalCode) {
 
 
 
-      console.log([returnHygieneData, returnStaphInfectionData, returnSpecialisedServicesData, returnObstetricsUnit, returnNeoNatalUnit, returnIVFUnit]);
+      console.log([resultsArray[0].reporting_unit_summary.reporting_unit_name, returnHygieneData, returnStaphInfectionData, returnSpecialisedServicesData, returnObstetricsUnit, returnNeoNatalUnit, returnIVFUnit]);
     });
 };
 
