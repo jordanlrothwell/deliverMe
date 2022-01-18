@@ -1,8 +1,52 @@
+if (localStorage.getItem("storage") !== null) {
+  var storage = JSON.parse(localStorage.getItem("storage"));
+} else {
+  var storage = [];
+}
+
+var search_history = document.querySelector("#search-history");
+
+function update_dropdowns() {
+  search_history.innerHTML = "";
+  console.log("cleared history");
+  new_HTML="";
+  if (storage.length > 0) {
+
+    // create dropdown menu items for previous searches
+    for (let i = 0; i < storage.length; i++) {
+        new_HTML += '<a class="dropdown-item" href="#">Search "' + storage[i] + '" again</a>';
+    }
+    new_HTML = '<div role="separator" class="dropdown-divider"></div>' + new_HTML;
+    search_history.innerHTML = new_HTML;
+
+    // for (let i = 0; i < storage.length; i++) {
+    //     query_element_string = ".dropdown-item:eq(" + (i+1) + ")";
+    //     $(query_element_string).on("click", function(event) {
+    //         event.stopImmediatePropagation();
+    //         $(".dropdown-toggle").dropdown("toggle");
+    //         $("input").val(storage[i]);
+    //         search();
+    //     });
+    // }
+  }
+}
+
+update_dropdowns();
+
+
+
+
 var searchbar = document.querySelector("input");
 searchbar.focus();
 
 var dropdown_items = document.querySelectorAll(".dropdown-item");
 dropdown_items[0].addEventListener("click", search);
+dropdown_items[dropdown_items.length-1].addEventListener("click", function(){
+  storage = [];
+  localStorage.removeItem("storage");
+  update_dropdowns();
+  document.querySelector("#search-results").innerHTML = "";
+});
 
 searchbar.addEventListener("keypress", function(event) {
   if (event.key === 'Enter') {
@@ -14,8 +58,10 @@ searchbar.addEventListener("keypress", function(event) {
 
 function search(){
   const user_input = searchbar.value;
+  storage.push(user_input);
+  localStorage.setItem("storage", JSON.stringify(storage));
+  update_dropdowns();
   searchbar.value = "searching the universe...";
-  console.log(user_input);
   searchbar.focus();
   searchbar.select();
   search_location(user_input);
@@ -215,7 +261,12 @@ function search_location(query) {
           }
           
         });
-    });
+  })
+  .catch((error) => {
+    document.querySelector("#search-results").innerHTML = "";
+    searchbar.value = "we got lost :(";
+    searchbar.select();
+});;
 }
 
 
