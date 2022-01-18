@@ -22,42 +22,6 @@ getClosestHospitals(lat, lon)
 
 
 
-function getData(hospitalCode) {
-    fetch(`https://myhospitalsapi.aihw.gov.au/api/v1/reporting-units/${hospitalCode}/data-items`)
-        .then(function (response) {
-            return response.json();
-        })
-        .then(function (data) {
-            let resultsArray = data.result;
-            console.log(resultsArray);
-            let handHygieneData = resultsArray.filter((dataItem) => {
-                return dataItem.measure_code === "MYH0019";
-            });
-            let staphInfectionData = resultsArray.filter((obj) => {
-                return obj.measure_code === "MYH0023";
-            });
-            let specialisedServicesData = resultsArray.filter((obj) => {
-                return obj.measure_code === "MYH0039";
-            });
-            let obstetricsUnit = specialisedServicesData.filter((obj) => {
-                return obj.reported_measure_code === "MYH-RM0760";
-            });
-            let neoNatalUnit = specialisedServicesData.filter((obj) => {
-                return obj.reported_measure_code === "MYH-RM0777";
-            });
-            let IVFUnit = specialisedServicesData.filter((obj) => {
-                return obj.reported_measure_code === "MYH-RM0778";
-            });
-            console.log(handHygieneData);
-            console.log(staphInfectionData);
-            console.log(specialisedServicesData);
-            console.log(obstetricsUnit);
-            console.log(neoNatalUnit);
-            console.log(IVFUnit);
-        });
-};
-
-
 function getClosestHospitals(lat, lon) {
 
     return getHospitalCoord().then(function (hospitals) {
@@ -129,3 +93,43 @@ function distance(lat1, lat2, lon1, lon2) {
     // calculate the result
     return (c * r);
 }
+
+
+let getData = function (hospitalCode) {
+  let URL = `https://myhospitalsapi.aihw.gov.au/api/v1/reporting-units/${hospitalCode}/data-items`;
+  fetch(URL)
+    .then(function (response) {
+      return response.json();
+    })
+    .then(function (data) {
+      let resultsArray = data.result;
+      console.log(resultsArray);
+      let handHygieneData = resultsArray.filter((obj) => {
+        return obj.measure_code === "MYH0019";
+      });
+      let staphInfectionData = resultsArray.filter((obj) => {
+        return obj.measure_code === "MYH0023";
+      });
+      let specialisedServicesData = resultsArray.filter((obj) => {
+        return obj.measure_code === "MYH0039";
+      });
+      let obstetricsUnit = specialisedServicesData.filter((obj) => {
+        return obj.reported_measure_code === "MYH-RM0760";
+      });
+      let neoNatalUnit = specialisedServicesData.filter((obj) => {
+        return obj.reported_measure_code === "MYH-RM0777";
+      });
+      let IVFUnit = specialisedServicesData.filter((obj) => {
+        return obj.reported_measure_code === "MYH-RM0778";
+      });
+      console.log(handHygieneData);
+      console.log(staphInfectionData);
+      console.log(specialisedServicesData);
+      console.log(obstetricsUnit);
+      console.log(neoNatalUnit);
+      console.log(IVFUnit);
+    });
+};
+
+
+
