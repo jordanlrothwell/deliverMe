@@ -68,6 +68,8 @@ function search_location(query) {
           for (let i = 0; i < codes[0].length; i++) {
             getData(codes[0][i], codes[1][i]);
           }
+          searchbar.value = "";
+          searchbar.focus();
         });
     })
     .catch((error) => {
@@ -217,7 +219,6 @@ function update_dropdowns() {
     for (let i = 0; i < storage.length; i++) {
       var dropdown_items = document.querySelectorAll(".dropdown-item");
       dropdown_items[i + 1].addEventListener("click", function () {
-        console.log(storage[i])
         searchbar.value = storage[i];
         const user_input = searchbar.value;
         searchbar.value = "searching the universe...";
@@ -247,7 +248,6 @@ searchbar.focus();
 
 // activates the search when the user selects the first dropdown item
 dropdown_items[0].addEventListener("click", function () {
-  console.log("search");
   search();
 });
 
@@ -260,10 +260,12 @@ searchbar.addEventListener("keypress", function (event) {
 
 // clear history when the last dropdown item is selected
 dropdown_items[dropdown_items.length - 1].addEventListener("click", function () {
-  console.log("clear history");
   storage = [];
   localStorage.removeItem("storage");
   update_dropdowns();
   document.querySelector("#search-results").innerHTML = "";
+  searchbar.value = "your secrets are safe ;)";
+  searchbar.select();
+  searchbar.focus();
 });
 
