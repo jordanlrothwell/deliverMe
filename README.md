@@ -2,7 +2,8 @@
 
 This web application is designed primarily for expecting parents to help make an informed decision of the best place to deliver.
 
-This application uses a public API with health data of Australian hospitals and draws on data that is relevant to deciding which hospital is best for giving birth. This application also uses latitiude and longditude to compare the location 'searched' by the user to compare the distance between hospitals.
+This application uses a public API that stores health data of Australian hospitals from the Australian Instittue of Health and Welfare. The metrics "ADD METRICS CHOSEN" have been chosen to compare between local hospitals, and to therefore help choose the best hospitals for giving birth. This application also uses latitiude and longditude to compare the location 'searched' by the user to compare the distance between hospitals. This is achieved by using TomTom API Explorer.
+
 
 ## User Story
 
@@ -30,10 +31,10 @@ INSERT SCREENSHOT HERE
 
 ## Contributors 
 
-Tiff
 Jordan 
 Michelle
 Roudi
 Steven
+Tiff
 
 ### Link to application
