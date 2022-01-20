@@ -10,7 +10,7 @@ function search() {
   storage.push(user_input);
   localStorage.setItem("storage", JSON.stringify(storage));
   update_dropdowns();
-  searchbar.value = "searching the universe...";
+  searchbar.value = "Searching...";
   searchbar.focus();
   searchbar.select();
   search_location(user_input);
@@ -53,7 +53,7 @@ function search_location(query) {
           });
           closestHospitalCodes = [];
           closestHospitalNames = [];
-          for (let i = 0; i < 9; i++) {
+          for (let i = 0; i < 3; i++) {
             for (let j = 0; j < data.result.length; j++) {
               if (sortedDistances[i] == distances[j]) {
                 closestHospitalCodes.push(data.result[j].reporting_unit_code);
