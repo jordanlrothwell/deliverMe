@@ -168,26 +168,17 @@ function getData(hospitalCode, hospitalName) {
       // console.log([hospitalName, returnHygieneData, returnStaphInfectionData, returnSpecialisedServicesData, returnObstetricsUnit, returnNeoNatalUnit, returnIVFUnit]);
 
       document.querySelector("#search-results").innerHTML +=
-        // '<div class="card col-12 col-sm-6 col-md-4 bg-light">' +
-        // '<div class="card-body">' +
-        // '<h5 class="card-title">' + hospitalName + '</h5>' +
-        // '<p class="card-text"><strong>handHygieneData:</strong> ' + returnHygieneData + '</p>' +
-        // '<p class="card-text"><strong>staphInfectionData:</strong> ' + returnStaphInfectionData + '</p>' +
-        // '<p class="card-text"><strong>specialisedServicesData:</strong> ' + returnSpecialisedServicesData + '</p>' +
-        // '<p class="card-text"><strong>obstetricsUnit:</strong> ' + returnObstetricsUnit + '</p>' +
-        // '<p class="card-text"><strong>neoNatalUnit:</strong> ' + returnNeoNatalUnit + '</p>' +
-        // '<p class="card-text"><strong>IVFUnit:</strong> ' + returnIVFUnit + '</p>' +
-        // '</div>' +
-        // '</div>';
-        '<div class="card  col-12 col-sm-6 col-md-3 mx-1 my-1 bg-light">' +
+        '<div class = col>' +
+        '<div class="card">' +
         '<div class="card-body">' +
         '<h5 class="card-title">' + hospitalName + '</h5>' +
-        '<p class="card-text"><strong>Hand Hygiene:</strong> ' + returnHygieneData + '</p>' +
-        '<p class="card-text"><strong>Staph Infections:</strong> ' + returnStaphInfectionData + '</p>' +
+        '<p class="card-text"><strong>Hand Hygiene (%):</strong> ' + returnHygieneData + '</p>' +
+        '<p class="card-text"><strong>Staph Infections (per 10,000):</strong> ' + returnStaphInfectionData + '</p>' +
         '<p class="card-text"><strong>Specialised Services:</strong> ' + returnSpecialisedServicesData + '</p>' +
         '<p class="card-text"><strong>Obstetrics Unit:</strong> ' + returnObstetricsUnit + '</p>' +
         '<p class="card-text"><strong>NeoNatal Unit:</strong> ' + returnNeoNatalUnit + '</p>' +
         '<p class="card-text"><strong>IVF Unit:</strong> ' + returnIVFUnit + '</p>' +
+        '</div>' +
         '</div>' +
         '</div>';
     });
